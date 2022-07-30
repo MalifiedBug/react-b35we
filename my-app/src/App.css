@@ -1,6 +1,6 @@
 .App {
   font-family: sans-serif;
-  text-align: center;
+  
 }
 .profile-picture {
   height: 200px;
@@ -21,4 +21,43 @@
 }
 .user-container {
   padding: 2rem;
+}
+
+.add-color{
+  display: flex;
+}
+
+.movie-spec {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.movie-container{
+  width: 340px;
+}
+
+.movie-poster{
+  width:340px;
+  height: 500px;
+  object-fit: cover;
+}
+
+.movie-name{
+  font-size: 24px;
+  margin: 0;
+}
+.movie-summary{
+  margin-top: 0;
+}
+
+.movie-rating{
+  font-size: 20px;
+}
+
+.movie-list{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 15px;
 }
