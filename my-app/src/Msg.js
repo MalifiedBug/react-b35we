@@ -4,7 +4,7 @@
 //2. Return JSX element
 //props can be any name - props is an object
 //Props destructuring
-function Msg({ name, pic }) {
+export function Msg({ name, pic }) {
     //const name ="Prasanth";
     console.log(name, pic);
     return (

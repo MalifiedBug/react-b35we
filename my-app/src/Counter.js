@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 //useState =numbers
-function Counter() {
+export function Counter() {
   const [like, setLike] = useState(0);
   const [dislike, setDislike] = useState(0);
 
