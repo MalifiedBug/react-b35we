@@ -1,5 +1,7 @@
 import { useState } from "react";
 import ColorBox from "./ColorBox";
+import Button from '@mui/material/Button';
+
 
 //onClick -camel case letter
 //Hooks -is a function- starts with "use"
@@ -30,10 +32,15 @@ export function AddColor() {
           type="text"
           // placeholder="Enter Color"
           value={color} />
-        <button
+        {/* <button
           //cope the colorList and add newColor to it
           onClick={() => setColorList([...colorList, color])}
-        >Add Color</button>
+        >Add Color</button> */}
+
+        <Button onClick={() => setColorList([...colorList, color])} 
+        variant="contained">Add Color</Button>
+
+
       </div>
 
       {colorList.map((clr) => (

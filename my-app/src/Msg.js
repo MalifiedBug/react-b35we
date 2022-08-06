@@ -1,3 +1,5 @@
+import { Counter } from "./Counter";
+
 //props(properties) - like an argument in function
 //Component Msg
 //1.First letter must be capital
@@ -12,7 +14,7 @@ export function Msg({ name, pic }) {
       <div>
         <img className="profile-picture" src={pic} alt={pic} />
         <h1> {name} 😊</h1>
-        {/* <Counter /> */}
+        <Counter />
       </div>
       //<h1>😊Hello B35WE {abc.name} {abc.age}😊</h1>
     );

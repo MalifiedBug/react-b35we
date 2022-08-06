@@ -3,7 +3,7 @@ import { AddColor } from "./AddColor";
 import { Counter } from "./Counter";
 import { Msg } from "./Msg";
 import { useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useNavigate, useParams } from "react-router-dom";
 // console.log(double(1000));
 
 const INTIAL_MOVIE_LIST = [
@@ -123,7 +123,7 @@ export default function App() {
             <Link  to="/color-game">AddColor</Link >
           </li>
           <li>
-            <Link  to="/somewhere">some where</Link >
+            <Link  to="/users">User List</Link >
           </li>
         </ul>
       </nav>
@@ -131,6 +131,7 @@ export default function App() {
     <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/movie" element={<MovieList />} />
+        <Route path="/movie/:id" element={<MovieDetails />} />
         <Route path="/color-game" element={<AddColor />} />
         <Route path="/users" element={<UserList />} />
       </Routes>
@@ -141,6 +142,15 @@ export default function App() {
   //JSX ends
 }
 
+
+function MovieDetails(){
+  const {id} = useParams();
+  return(
+    <div>
+      <h1>Movie details Page {id}</h1>
+    </div>
+  )
+}
 
 function UserList(){
   const user = [
@@ -168,8 +178,8 @@ function UserList(){
 
   return(
     <div>
-      {user.map((user) => (
-        <Msg name={user.name} pic={user.pic} />
+      {user.map((usr) => (
+        <Msg name={usr.name} pic={usr.pic} />
       ))} 
     </div>
   )
@@ -187,14 +197,14 @@ function MovieList(){
   return(
     <div className="movie-list">
     {movieList.map((mv, index) => (
-        <Movie key={index} movie={mv}/> 
+        <Movie key={index} movie={mv} id={index}/> 
     ))}
     
     </div>
   )
 }
 
-function Movie({ movie }) {
+function Movie({ movie, id }) {
   // const movie = {
   //   name: "The Avengers",
   //   rating: 8,
@@ -209,6 +219,8 @@ function Movie({ movie }) {
     fontWeight: "bold",
    
   };
+     const navigate = useNavigate();
+
  // block = true
  // none -false
 //show = !true -> false
@@ -223,10 +235,12 @@ function Movie({ movie }) {
     <div className="movie-container">
     <img className="movie-poster" src={movie.poster} alt={movie.name}/>
     <div className="movie-spec">
-    <h2 className="movie-name">{movie.name}</h2> 
+    <h2 className="movie-name">{movie.name} - {id}</h2> 
     <p style= {styles} className="movie-rating">
 ⭐ {movie.rating}</p>
       </div>
+      <button className="toggle-style" 
+      onClick={() => navigate("/movie/" + id)}>Info</button>
       <button className="toggle-style" onClick={() => setShow(!show) }>Toggle description</button>
     {/* <p style= {summaryStyle} className="movie-summary">{movie.summary}</p> */}
       {show ? <p className="movie-summary">{movie.summary}</p> : null} 
