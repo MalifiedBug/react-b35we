@@ -3,10 +3,15 @@ import { AddColor } from "./AddColor";
 import { Counter } from "./Counter";
 import { Msg } from "./Msg";
 import { useState } from "react";
-import { Routes, Route, Link, useNavigate, useParams } from "react-router-dom";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import InfoIcon from '@mui/icons-material/Info';
+import { MovieDetails } from "./MovieDetails";
 // console.log(double(1000));
 
 const INTIAL_MOVIE_LIST = [
@@ -134,7 +139,7 @@ export default function App() {
     <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/movie" element={<MovieList />} />
-        <Route path="/movie/:id" element={<MovieDetails />} />
+        <Route path="/movie/:id" element={<MovieDetails/>} />
         <Route path="/color-game" element={<AddColor />} />
         <Route path="/users" element={<UserList />} />
       </Routes>
@@ -145,15 +150,6 @@ export default function App() {
   //JSX ends
 }
 
-
-function MovieDetails(){
-  const {id} = useParams();
-  return(
-    <div>
-      <h1>Movie details Page {id}</h1>
-    </div>
-  )
-}
 
 function UserList(){
   const user = [
@@ -227,12 +223,10 @@ function MovieList(){
       } 
     }  
        >Add Movie</Button>
+    
   
     </div>
    
-
-
-
    <div className="movie-list">
     {movieList.map((mv, index) => (
         <Movie key={index} movie={mv} id={index}/> 
@@ -276,16 +270,40 @@ function Movie({ movie, id }) {
     <div className="movie-container">
     <img className="movie-poster" src={movie.poster} alt={movie.name}/>
     <div className="movie-spec">
-    <h2 className="movie-name">{movie.name} - {id}</h2> 
+    <h2 className="movie-name">{movie.name} - {id}
+    <IconButton 
+    onClick={() => setShow(!show) }
+    aria-label="Toggle description" 
+    color="primary">
+    {show ? <ExpandLessIcon />  : <ExpandMoreIcon />}
+  
+</IconButton>
+
+
+<IconButton className="toggle-style" 
+      onClick={() => navigate("/movie/" + id)}
+      aria-label="Info" 
+       color="primary"> 
+       <InfoIcon />
+      </IconButton>
+
+</h2> 
     <p style= {styles} className="movie-rating">
 ⭐ {movie.rating}</p>
       </div>
-      <button className="toggle-style" 
-      onClick={() => navigate("/movie/" + id)}>Info</button>
-      <button className="toggle-style" onClick={() => setShow(!show) }>Toggle description</button>
+      
+
+   
     {/* <p style= {summaryStyle} className="movie-summary">{movie.summary}</p> */}
       {show ? <p className="movie-summary">{movie.summary}</p> : null} 
     <Counter />
     </div>
   )
 }
+
+//React flows in one direction - parent to child 
+// Now from child to parent 
+
+//         App
+
+//movieList      moviedetail
