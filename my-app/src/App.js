@@ -4,6 +4,9 @@ import { Counter } from "./Counter";
 import { Msg } from "./Msg";
 import { useState } from "react";
 import { Routes, Route, Link, useNavigate, useParams } from "react-router-dom";
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+
 // console.log(double(1000));
 
 const INTIAL_MOVIE_LIST = [
@@ -193,14 +196,52 @@ function Home(){
 }
 
 function MovieList(){
-  const movieList = INTIAL_MOVIE_LIST;
+  
+  const [name, setName] = useState("");
+  const [poster, setPoster] = useState("");
+  const [rating, setRating] = useState("");
+  const [summary, setSummary] = useState("");
+
+  const [movieList,setMovieList] = useState(INTIAL_MOVIE_LIST);
+
   return(
-    <div className="movie-list">
+    <div>
+    <div className="add-movie-form">
+   
+   <TextField onChange={(e) => setName(e.target.value)} label="Name" variant="standard" />
+   <TextField onChange={(e) => setPoster(e.target.value)} label="Poster" variant="standard" />
+   <TextField onChange={(e) => setRating(e.target.value)} label="Rating" variant="standard" />
+   <TextField onChange={(e) => setSummary(e.target.value)} label="Summary" variant="standard" />
+
+   <Button  variant="contained"
+    //cope the MovieList and add newMovie to it
+    onClick={() => {
+      const newMovie = {
+        name: name,
+        poster: poster,
+        rating: rating,
+        summary: summary,
+      }
+
+       setMovieList([...movieList, newMovie])
+      } 
+    }  
+       >Add Movie</Button>
+  
+    </div>
+   
+
+
+
+   <div className="movie-list">
     {movieList.map((mv, index) => (
         <Movie key={index} movie={mv} id={index}/> 
     ))}
     
     </div>
+    </div>
+
+    
   )
 }
 

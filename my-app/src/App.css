@@ -64,3 +64,10 @@
 .toggle-style{
   font-size: 20px;
 }
+
+.add-movie-form{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 30px;
+}
