@@ -37,8 +37,8 @@ export function AddColor() {
           onClick={() => setColorList([...colorList, color])}
         >Add Color</button> */}
 
-        <Button onClick={() => setColorList([...colorList, color])} 
-        variant="contained">Add Color</Button>
+        <button onClick={() => setColorList([...colorList, color])} 
+        variant="contained">Add Color</button>
 
 
       </div>
