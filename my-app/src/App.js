@@ -1,7 +1,6 @@
 import "./App.css";
 import { AddColor } from "./AddColor";
-import { Navigate, Routes, Route, Link } from "react-router-dom";
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Navigate, Routes, Route } from "react-router-dom";
 import { MovieDetails } from "./MovieDetails";
 import { Home } from "./Home";
 import { MovieList } from "./MovieList";
@@ -10,7 +9,13 @@ import { useState } from "react";
 import { NotFoundPage } from "./NotFoundPage";
 import { AddMovie } from "./AddMovie";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Button from '@mui/material/Button';
+import { useNavigate } from "react-router-dom";
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import Paper from '@mui/material/Paper';
 
 
 export const INTIAL_MOVIE_LIST = [
@@ -83,41 +88,63 @@ export const INTIAL_MOVIE_LIST = [
 //2. Publisher -provider - context.Provider
 //3. Subscriber - useContext - useContext(context)
 
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
-});
 
 export default function App() {
-  const people = ["Gowtham", "Kaviya", "Somu"];
-  const [movieList, setMovieList] = useState(INTIAL_MOVIE_LIST);
+  // const people = ["Gowtham", "Kaviya", "Somu"];
+  const [movieList, setMovieList] = useState([]);
+  const [mode, setMode] = useState("light");
+  
+ fetch("https://6301d5f39a1035c7f807c7e5.mockapi.io/movies")
+    .then(response => response.json())
+    .then(data =>  {
+      setMovieList(data);
+    })
+
+
+  const theme = createTheme({
+    palette: {
+      mode: mode,
+    },
+  });
+
+  const navigate = useNavigate();
+
 
   //JSX start
   return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-    <div className="App">
+    <ThemeProvider theme={theme}>
+            <Paper style={{ borderRadius: 0, minHeight: "100vh" }} elevation={0} >
       
-      <nav>
-        <ul>
-          <li>
-            <Link  to="/">Home</Link >
-          </li>
-          <li>
-            <Link  to="/movie">MovieList</Link >
-          </li>
-          <li>  
-            <Link  to="/color-game">AddColor</Link >
-          </li>
-          <li>
-            <Link  to="/users">User List</Link >
-          </li>
-          <li>
-            <Link  to="/movie/add">Add Movie</Link >
-          </li>
-        </ul>
-      </nav>
+    <div className="App">      
+      
+      <AppBar position="static">
+      <Toolbar>
+      <Button 
+      color="inherit"
+      onClick={() => navigate("/")}
+      >HOME</Button>
+      <Button 
+      color="inherit"
+      onClick={() => navigate("/movie")}
+      >MOVIES</Button>
+      <Button 
+      color="inherit"
+      onClick={() => navigate("/movie/add")}
+      >ADD MOVIES</Button>
+      <Button 
+      color="inherit"
+      onClick={() => navigate("/color-game")}
+      >COLOR GAME</Button>
+      <Button 
+      color="inherit"
+      startIcon={mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+      onClick={() => setMode(mode == "light" ? "dark" : "light") }
+      >
+        {mode == "light" ? "dark" : "light"} MODE
+      </Button>
+     </Toolbar>
+    </AppBar>
+
    
     <Routes>
         <Route path="/" element={<Home />} />
@@ -134,6 +161,7 @@ export default function App() {
 
 
     </div>
+    </Paper>
    </ThemeProvider> 
   );
   //JSX ends
